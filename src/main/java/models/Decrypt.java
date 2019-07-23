@@ -5,39 +5,45 @@ import static java.lang.Character.isUpperCase;
 
 public class Decrypt {
     private String message;
-    private int shiftKey;
+    private int shiftBy;
     private static final int Letter = 26;
     //constructor
-    public Decrypt(String message, int shiftKey) {
+    public Decrypt(String message, int shiftBy) {
         this.message=message;
-        this.shiftKey=shiftKey;
+        this.shiftBy=shiftBy;
     }
 
-    public String decipher(){
-        shiftKey %= Letter;
+    public String getMessage() {
+        return message;
+    }
+
+    public int getShiftBy() {
+        return shiftBy;
+    }
+    public String decipher(String message, int shiftBy) {
+
+        shiftBy %= Letter;
         char[] chars = message.toCharArray();
-        shift(chars,shiftKey);
+        shift(chars, shiftBy);
         return new String(chars);
-
     }
-    private void shift(char[] chars, int shiftKey) {
+    public void shift(char[] chars, int shiftBy) {
         for (int i = 0; i < chars.length; ++i) {
             if (isLowerCase(chars[i])) {
-                chars[i] = shiftChar(chars[i], shiftKey, 'a', 'z');
+                chars[i] = shiftChar(chars[i], shiftBy, 'a', 'z');
             } else if (isUpperCase(chars[i])) {
-                chars[i] =  shiftChar(chars[i], shiftKey, 'A', 'Z');
+                chars[i] = shiftChar(chars[i], shiftBy, 'A', 'Z');
             }
         }
     }
-    private char shiftChar(char ch, int shiftBy, char firstChar, char lastChar) {
-        ch += shiftBy;
-        if (ch < firstChar) {
-            return (char) (ch + Letter);
+    public char shiftChar(char c, int shiftBy, char firstChar, char lastChar) {
+        c -= shiftBy;
+        if (c < firstChar) {
+            return (char) (c + Letter);
         }
-        if (ch > lastChar) {
-            return (char) (ch - Letter);
+        if (c > lastChar) {
+            return (char) (c - Letter);
         }
-        return ch;
+        return c;
     }
-
 }
